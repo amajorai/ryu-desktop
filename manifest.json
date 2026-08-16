@@ -1,0 +1,77 @@
+{
+  "id": "@ryu/desktop",
+  "name": "Virtual Desktop",
+  "version": "0.1.15",
+  "stability": "experimental",
+  "description": "An interactive virtual desktop for any Ryu node — cloud-managed, self-hosted, or local. The sidecar brings up a full headless Linux desktop (Xvfb + window manager + apps) with a VNC server on loopback, exposes it through Core's generic WebSocket ext-proxy, and the desktop Virtual Desktop panel streams it live with mouse/keyboard input. Ghost can drive the same display, so agents see and control exactly what you watch.",
+  "keywords": ["desktop", "vnc", "stream", "remote", "computer-use"],
+  "icon": "monitor-02",
+  "iconDither": { "from": 210, "to": "transparent", "direction": "down" },
+  "tagline": "A live, interactive desktop for the node — watch and drive it",
+  "category": "Developer Tools",
+  "surfaces": {
+    "gateway": { "support": "none" },
+    "core": { "support": "none" },
+    "desktop": { "support": "full" },
+    "island": { "support": "limited" },
+    "mobile": { "support": "limited" },
+    "extension": { "support": "none" },
+    "web": { "support": "full" },
+    "cli": { "support": "list" }
+  },
+  "engines": {
+    "ryu": ">=0.1.0"
+  },
+  "runnables": [],
+  "sidecars": [
+    {
+      "name": "desktop",
+      "process": {
+        "kind": "local",
+        "command": "ryu-desktop",
+        "command_env": "RYU_DESKTOP_BIN",
+        "port_env": "RYU_DESKTOP_PORT"
+      },
+      "port": 8015,
+      "health_path": "/health",
+      "lazy": true,
+      "idle_stop_secs": 300,
+      "http": {
+        "public_mount": "/api/desktop",
+        "routes": [
+          { "path": "/" },
+          { "path": "/health" },
+          { "path": "/capabilities" },
+          { "path": "/screen" },
+          { "path": "/ws" },
+          { "path": "/input" }
+        ]
+      }
+    }
+  ],
+  "permission_grants": ["desktop:view", "desktop:control"],
+  "permission_levels": [
+    {
+      "id": "desktop.view",
+      "label": "Can view",
+      "description": "See the node's virtual desktop as a live stream."
+    },
+    {
+      "id": "desktop.control",
+      "label": "Can control",
+      "description": "Drive the virtual desktop with mouse and keyboard input.",
+      "implies": ["desktop.view"]
+    }
+  ],
+  "contributes": {
+    "dock_panels": [
+      {
+        "id": "desktop",
+        "title": "Virtual Desktop",
+        "icon": "hugeicons:monitor-02",
+        "placement": "right",
+        "panel": "native"
+      }
+    ]
+  }
+}
