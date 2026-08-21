@@ -1,0 +1,84 @@
+{
+  "tags": ["desktop","vnc","stream","remote","computer-use"],
+  "author": {"name":"Ryu","url":"https://ryuhq.com"},
+  "repository": "https://github.com/amajorai/ryu-desktop",
+  "homepage": "https://github.com/amajorai/ryu-desktop",
+  "privacyPolicyUrl": "https://ryuhq.com/privacy",
+  "termsOfServiceUrl": "https://ryuhq.com/terms",
+  "id": "@ryu/desktop",
+  "name": "Virtual Desktop",
+  "version": "0.2.0",
+  "stability": "experimental",
+  "description": "An interactive virtual desktop for any Ryu node — cloud-managed, self-hosted, or local. The sidecar brings up a full headless Linux desktop (Xvfb + window manager + apps) with a VNC server on loopback, exposes it through Core's generic WebSocket ext-proxy, and the desktop Virtual Desktop panel streams it live with mouse/keyboard input. Ghost can drive the same display, so agents see and control exactly what you watch.",
+  "keywords": ["desktop", "vnc", "stream", "remote", "computer-use"],
+  "icon": "monitor-02",
+  "iconDither": { "from": 210, "to": "transparent", "direction": "down" },
+  "tagline": "A live, interactive desktop for the node — watch and drive it",
+  "category": "Developer Tools",
+  "surfaces": {
+    "gateway": { "support": "none" },
+    "core": { "support": "none" },
+    "desktop": { "support": "full" },
+    "island": { "support": "limited" },
+    "mobile": { "support": "limited" },
+    "extension": { "support": "none" },
+    "web": { "support": "full" },
+    "cli": { "support": "list" }
+  },
+  "engines": {
+    "ryu": ">=0.1.0"
+  },
+  "runnables": [],
+  "sidecars": [
+    {
+      "name": "desktop",
+      "process": {
+        "kind": "local",
+        "command": "ryu-desktop",
+        "command_env": "RYU_DESKTOP_BIN",
+        "port_env": "RYU_DESKTOP_PORT"
+      },
+      "port": 8015,
+      "health_path": "/health",
+      "lazy": true,
+      "idle_stop_secs": 300,
+      "http": {
+        "public_mount": "/api/desktop",
+        "routes": [
+          { "path": "/" },
+          { "path": "/health" },
+          { "path": "/capabilities" },
+          { "path": "/screen", "permission": "desktop.view" },
+          { "path": "/ws", "permission": "desktop.control" },
+          { "path": "/input", "permission": "desktop.control" }
+        ]
+      }
+    }
+  ],
+  "permission_grants": ["desktop:view", "desktop:control"],
+  "permission_levels": [
+    {
+      "id": "desktop.view",
+      "label": "Can view",
+      "description": "See the node's virtual desktop as a live stream."
+    },
+    {
+      "id": "desktop.control",
+      "label": "Can control",
+      "description": "Drive the virtual desktop with mouse and keyboard input.",
+      "implies": ["desktop.view"]
+    }
+  ],
+  "contributes": {
+  "chat_widget_templates": [{"id":"desktop.chat","title":"Virtual Desktop widget","description":"Virtual Desktop chat widget metadata is coming soon; no render tool is available yet.","triggers":["virtual desktop widget"],"examples":["Show me a virtual desktop widget"],"backing":{},"display_mode":"inline","safe_action_ids":[],"availability":"coming-soon"}],
+    "dock_panels": [
+      {
+        "id": "desktop",
+        "title": "Virtual Desktop",
+        "icon": "hugeicons:monitor-02",
+        "placement": "right",
+        "panel": "native"
+      }
+    ]
+  }
+}
