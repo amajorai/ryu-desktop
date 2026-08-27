@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ryu.desktop",
+  "version": "0.1.14",
+  "description": "An interactive Linux virtual desktop for Ryu nodes. The app sidecar owns stable per-Bot screens on the shared node computer and exposes them through Core's authenticated WebSocket proxy with mouse and keyboard input. Files and installed applications remain shared.",
+  "author": {
+    "name": "Ryu",
+    "url": "https://ryuhq.com"
+  },
+  "homepage": "https://github.com/amajorai/ryu-desktop",
+  "repository": "https://github.com/amajorai/ryu-desktop",
+  "keywords": ["desktop", "vnc", "stream", "remote", "computer-use"],
+  "extensions": {
+    "com.ryuhq.ryu": {
+      "id": "@ryu/desktop",
+      "displayName": "Virtual Desktop"
+    }
+  }
+}
