@@ -1,0 +1,28 @@
+{
+  "name": "@ryu/sidecar-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./blind-index": "./src/blind-index.ts",
+    "./branding": "./src/branding.ts",
+    "./content": "./src/content.ts",
+    "./content-seal": "./src/content-seal.ts",
+    "./sealed-file": "./src/sealed-file.ts",
+    "./sealed-log": "./src/sealed-log.ts",
+    "./seal": "./src/seal.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "bun test src"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@noble/ciphers": "^2.3.0",
+    "@noble/hashes": "^2.2.0",
+    "zod": "^4.1.13"
+  }
+}
