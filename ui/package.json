@@ -1,0 +1,10 @@
+{
+  "name": "@ryu/desktop-app",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Companion-UI package for the Ryu Virtual Desktop app (@ryu/desktop). The app is backend-only in the monorepo — its virtual-desktop lifecycle ships in ../sidecar and its desktop panel lives in apps/desktop — so this package currently carries only the consumer-side contract test that pins the manifest invariants a Virtual Desktop UI must honor.",
+  "scripts": {
+    "test": "bun test"
+  }
+}
